@@ -39,6 +39,8 @@ func ObtainDomain(config *config.Config) *alidns.Record {
 	request := alidns.CreateDescribeDomainRecordsRequest()
 	request.Scheme = "https"
 
+	request.RRKeyWord = config.RRKeyWord
+
 	request.DomainName = config.Domain
 
 	response, err := client.DescribeDomainRecords(request)
@@ -47,15 +49,30 @@ func ObtainDomain(config *config.Config) *alidns.Record {
 		log.Println(err.Error())
 	}
 
-	record := response.DomainRecords.Record[0]
+	//record := response.DomainRecords.Record[0]
+	//
+	//return &alidns.Record{
+	//	RR:       record.RR,
+	//	RecordId: record.RecordId,
+	//	Type:     record.Type,
+	//	Value:    record.Value,
+	//	TTL:      record.TTL,
+	//}
 
-	return &alidns.Record{
-		RR:       record.RR,
-		RecordId: record.RecordId,
-		Type:     record.Type,
-		Value:    record.Value,
-		TTL:      record.TTL,
+	for _, record := range response.DomainRecords.Record {
+		if record.Type == "A" {
+			return &alidns.Record{
+				RR:       record.RR,
+				RecordId: record.RecordId,
+				Type:     record.Type,
+				Value:    record.Value,
+				TTL:      record.TTL,
+			}
+		}
 	}
+
+	return nil
+
 }
 
 // UpdateDomain 更新远程域名解析

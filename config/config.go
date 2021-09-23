@@ -9,6 +9,7 @@ type Config struct {
 	AccessKeyID     string
 	AccessKeySecret string
 	Domain          string
+	RRKeyWord       string
 	Email           string
 	EmailAuthCode   string
 	IsEmail         bool
@@ -22,6 +23,7 @@ func init() {
 	flag.StringVar(&command.Domain, "d", "", "Domain")
 	flag.StringVar(&command.Email, "e", "", "QQ Email")
 	flag.StringVar(&command.EmailAuthCode, "a", "", "authCode of Email")
+	flag.StringVar(&command.RRKeyWord, "r", "", "RRKeyWord")
 	flag.Parse()
 
 	if command.AccessKeyID != "" && command.AccessKeySecret != "" && command.Domain != "" &&

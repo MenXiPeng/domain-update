@@ -22,7 +22,8 @@ func UpdateIpPool(ip string) {
 
 // ObtainPubIp 获取公网 ip 地址
 func ObtainPubIp() string {
-	resp, err := http.Get("http://ip.cip.cc")
+	//http://ip.cip.cc
+	resp, err := http.Get("http://icanhazip.com")
 	if err != nil {
 		return ""
 	}
